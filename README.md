@@ -1,2 +1,2 @@
 # wayland-to-the-peace
-Um jogo RPG, de plataforma, com combates intensos.
+Um jogo RPG, de top-down, com combates intensos.
