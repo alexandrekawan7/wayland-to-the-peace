@@ -51,7 +51,7 @@ func _process(_delta):
 			
 		current_direction = DIRECTION_UP
 		
-		position.y -= SPEED
+		move_and_collide(Vector2(0, -SPEED))
 	elif Input.is_action_pressed("move_left"):
 		if $AnimatedSprite2D.animation != "move_lateral":
 			$AnimatedSprite2D.play("move_lateral")
@@ -61,7 +61,7 @@ func _process(_delta):
 			
 		current_direction = DIRECTION_LEFT
 		
-		position.x -= SPEED
+		move_and_collide(Vector2(-SPEED, 0))
 	elif Input.is_action_pressed("move_down"):
 		if $AnimatedSprite2D.animation != "move_frontal":
 			$AnimatedSprite2D.play("move_frontal")
@@ -71,7 +71,7 @@ func _process(_delta):
 			
 		current_direction = DIRECTION_DOWN
 		
-		position.y += SPEED
+		move_and_collide(Vector2(0, SPEED))
 	elif Input.is_action_pressed("move_right"):
 		if $AnimatedSprite2D.animation != "move_lateral":
 			$AnimatedSprite2D.play("move_lateral")
@@ -81,7 +81,11 @@ func _process(_delta):
 			
 		current_direction = DIRECTION_RIGHT
 		
-		position.x += SPEED
+		move_and_collide(Vector2(SPEED, 0))
 	else:
 		stay_idle()
 
+
+
+func _on_combat_area_body_entered(body):
+	print("Begin combat!")

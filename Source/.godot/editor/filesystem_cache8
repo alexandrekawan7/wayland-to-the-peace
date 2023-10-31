@@ -1,10 +1,11 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1698788239
+::res://::1698790861
 icon.svg::CompressedTexture2D::2512010817084427749::1698788172::1698788172::1::::<><>::
-::res://Scenes/::1698788172
-Main.tscn::PackedScene::1291652872707535571::1698788172::0::1::::<><>::uid://dt8orspntiju8::::res://Tiles/Terrain/Grass.png<>uid://d2o3e2svc4es4::::res://Tiles/Terrain/player.png<>res://Scenes/Player.gd
-Player.gd::GDScript::-1::1698788172::0::1::::<>CharacterBody2D<>::
+::res://Scenes/::1698790558
+Main.tscn::PackedScene::1291652872707535571::1698790558::0::1::::<><>::uid://dt8orspntiju8::::res://Tiles/Terrain/Grass.png<>uid://d2o3e2svc4es4::::res://Tiles/Terrain/player.png<>res://Scenes/Player.gd
+Player.gd::GDScript::-1::1698790106::0::1::::<>CharacterBody2D<>::
 ::res://Tiles/::1698788172
-::res://Tiles/Terrain/::1698788172
+::res://Tiles/Terrain/::1698791608
 Grass.png::CompressedTexture2D::8561855911689750077::1698788172::1698788172::1::::<><>::
 player.png::CompressedTexture2D::9084970783730990009::1698788172::1698788172::1::::<><>::
+slime.png::CompressedTexture2D::2297579055218497266::1669967699::1698791611::1::::<><>::
