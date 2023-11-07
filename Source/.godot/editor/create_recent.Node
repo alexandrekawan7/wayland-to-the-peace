@@ -1,5 +1,8 @@
-CollisionShape2D
+Control
 Area2D
+RemoteTransform2D
+Camera2D
+CollisionShape2D
 AnimatedSprite2D
 CharacterBody2D
 TileMap
