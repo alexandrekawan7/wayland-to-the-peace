@@ -8,7 +8,12 @@ const DIRECTION_LEFT = 2
 const DIRECTION_DOWN = 3
 const DIRECTION_RIGHT = 4
 
+const BORDER_DISTANCE_VERTICAL = 300
+const BORDER_DISTANCE_HORIZONTAL = 500
+
 @onready var current_direction = DIRECTION_DOWN
+
+@onready var level: Sprite2D = get_parent().get_node("Level")
 
 @onready var camera: Camera2D = get_parent().get_node("Camera")
 
@@ -44,6 +49,16 @@ func _ready():
 	stay_idle()
 
 func _process(_delta):
+	camera.limit_top = -(level.get_rect().size.y / 2 - BORDER_DISTANCE_VERTICAL)
+	camera.limit_bottom = -camera.limit_top
+	camera.limit_right = level.get_rect().size.x / 2 - BORDER_DISTANCE_HORIZONTAL
+	camera.limit_left = -camera.limit_right
+	
+	print(camera.limit_right)
+	print(self.position)
+	
+	
+	
 	if not Global.is_in_combat:
 		camera.position = self.position
 		

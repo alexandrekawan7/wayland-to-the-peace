@@ -483,10 +483,12 @@ radius = 25.0
 
 [node name="Root" type="Node2D"]
 
-[node name="Village" type="Sprite2D" parent="."]
-position = Vector2(132, 277)
+[node name="Level" type="Sprite2D" parent="."]
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("1_78xe4")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level"]
+build_mode = 1
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(-220, 39)
