@@ -1,9 +1,14 @@
-CollisionPolygon2D
+Label
+ColorRect
 Control
+CollisionPolygon2D
+CollisionShape2D
+StaticBody2D
+RigidBody2D
 Area2D
+Line2D
 RemoteTransform2D
 Camera2D
-CollisionShape2D
 AnimatedSprite2D
 CharacterBody2D
 TileMap

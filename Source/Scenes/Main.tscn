@@ -1,10 +1,8 @@
-[gd_scene load_steps=69 format=3 uid="uid://snxlmhqysmgh"]
+[gd_scene load_steps=58 format=3 uid="uid://snxlmhqysmgh"]
 
 [ext_resource type="Texture2D" uid="uid://cxqnobsuxnuee" path="res://Level/Base/Village.png" id="1_78xe4"]
 [ext_resource type="Texture2D" uid="uid://d2o3e2svc4es4" path="res://Tiles/Terrain/player.png" id="2_61owg"]
 [ext_resource type="Script" path="res://Scenes/Player.gd" id="2_yuxl1"]
-[ext_resource type="Script" path="res://Scenes/Enemy.gd" id="4_33p8t"]
-[ext_resource type="Texture2D" uid="uid://7y7152tpk7pu" path="res://Tiles/Terrain/slime.png" id="4_adrtp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_31agr"]
 atlas = ExtResource("2_61owg")
@@ -419,81 +417,20 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y4i5p"]
 size = Vector2(26, 36)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a7or5"]
-atlas = ExtResource("4_adrtp")
-region = Rect2(0, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6ac64"]
-atlas = ExtResource("4_adrtp")
-region = Rect2(32, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g7pd8"]
-atlas = ExtResource("4_adrtp")
-region = Rect2(64, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_of8sr"]
-atlas = ExtResource("4_adrtp")
-region = Rect2(96, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7wmqf"]
-atlas = ExtResource("4_adrtp")
-region = Rect2(128, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bwvqq"]
-atlas = ExtResource("4_adrtp")
-region = Rect2(160, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_acebo"]
-atlas = ExtResource("4_adrtp")
-region = Rect2(192, 64, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_01qma"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a7or5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6ac64")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_g7pd8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_of8sr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7wmqf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bwvqq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_acebo")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7lwru"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_6gic7"]
-radius = 25.0
+[sub_resource type="LabelSettings" id="LabelSettings_pjtg2"]
+font_size = 30
 
 [node name="Root" type="Node2D"]
 
-[node name="Level" type="Sprite2D" parent="."]
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("1_78xe4")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level"]
-build_mode = 1
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(200, 200)
 
 [node name="Player" type="CharacterBody2D" parent="."]
+z_index = 1
 position = Vector2(-220, 39)
-collision_layer = 2
-collision_mask = 2
+scale = Vector2(1, 1.01454)
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("2_yuxl1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
@@ -507,31 +444,40 @@ frame_progress = 0.883564
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(1, 0)
 shape = SubResource("RectangleShape2D_y4i5p")
-one_way_collision = true
 
-[node name="Enemy" type="CharacterBody2D" parent="."]
-position = Vector2(-75, 43)
-scale = Vector2(2, 2)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("4_33p8t")
+[node name="Menu" type="Control" parent="Player"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -222.0
+offset_top = -212.904
+offset_right = 178.0
+offset_bottom = 187.096
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemy"]
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_01qma")
-frame_progress = 0.24681
+[node name="ColorRect" type="ColorRect" parent="Player/Menu"]
+layout_mode = 0
+offset_left = -281.0
+offset_top = -144.0
+offset_right = 736.0
+offset_bottom = 557.0
+color = Color(0.262745, 0.262745, 0.262745, 0.392157)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
-shape = SubResource("CapsuleShape2D_7lwru")
+[node name="Label" type="Label" parent="Player/Menu"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 102.51
+offset_right = 487.0
+offset_bottom = 294.51
+text = "Oi eu sou um menu"
+label_settings = SubResource("LabelSettings_pjtg2")
 
-[node name="CombatTriggerArea" type="Area2D" parent="Enemy"]
-collision_layer = 2
-collision_mask = 2
+[node name="Level" type="StaticBody2D" parent="."]
+collision_priority = 0.0
 
-[node name="Shape" type="CollisionShape2D" parent="Enemy/CombatTriggerArea"]
-shape = SubResource("CircleShape2D_6gic7")
+[node name="Level" type="Sprite2D" parent="Level"]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_78xe4")
 
-[node name="Camera" type="Camera2D" parent="."]
-position = Vector2(200, 200)
-
-[connection signal="body_shape_entered" from="Enemy/CombatTriggerArea" to="Player" method="_on_combat_area_body_shape_entered"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level"]
+z_index = -1
+build_mode = 1
+polygon = PackedVector2Array(856, -611, 875, -513, 920, -509, 995, -267, 1014, -82, 928, -79, 819, 81, 784, 81, 782, -47, 760, -126, 631, -247, 516, -105, 515, -78, 52, -57, 10, 112, 29, 378, 273, 378, 276, 495, 476, 495, 478, 369, 584, 367, 748, 367, 830, 468, 1151, 456, 1368, 293, 1438, 290, 1438, 725, 1356, 723, 1331, 754, 968, 763, 1000, 684, 971, 638, 916, 616, 857, 616, 797, 654, 798, 702, 800, 748, 645, 748, 634, 727, 553, 657, 504, 640, 447, 641, 446, 657, 324, 663, 266, 705, 244, 725, 246, 803, -212, 807, -174, 730, -296, 638, -359, 670, -360, 711, -521, 732, -494, 668, -613, 593, -672, 609, -736, 688, -763, 727, -922, 729, -980, 632, -1064, 608, -1144, 670, -1151, 702, -1298, 654, -1431, 705, -1435, 404, -1191, 395, -1160, 419, -1105, 419, -1087, 381, -1014, 385, -1011, 433, -982, 452, -740, 452, -483, 422, -444, 378, -394, 378, -363, 306, -376, 144, -422, 111, -358, 8, -404, -169, -457, -205, -966, -202, -1073, -248, -1165, -183, -1239, -251, -1319, -197, -1395, -242, -1431, -210, -1441, -513, -1160, -515, -724, -505, -433, -516, -443, -631, -217, -623, 65, -631, 123, -558, 460, -532, 463, -602)

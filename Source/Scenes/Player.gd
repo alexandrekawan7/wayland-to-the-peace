@@ -13,9 +13,11 @@ const BORDER_DISTANCE_HORIZONTAL = 500
 
 @onready var current_direction = DIRECTION_DOWN
 
-@onready var level: Sprite2D = get_parent().get_node("Level")
+@onready var level: StaticBody2D = get_parent().get_node("Level")
 
 @onready var camera: Camera2D = get_parent().get_node("Camera")
+
+@onready var menu: Control = $Menu
 
 func flip():
 	$AnimatedSprite2D.flip_h = !$AnimatedSprite2D.flip_h
@@ -49,68 +51,64 @@ func _ready():
 	stay_idle()
 
 func _process(_delta):
-	camera.limit_top = -(level.get_rect().size.y / 2 - BORDER_DISTANCE_VERTICAL)
-	camera.limit_bottom = -camera.limit_top
-	camera.limit_right = level.get_rect().size.x / 2 - BORDER_DISTANCE_HORIZONTAL
-	camera.limit_left = -camera.limit_right
+	if Input.is_action_just_pressed("pause"):
+			Global.is_paused = !Global.is_paused
 	
-	print(camera.limit_right)
-	print(self.position)
+	menu.visible = Global.is_paused
 	
-	
-	
-	if not Global.is_in_combat:
-		camera.position = self.position
-		
-		if Input.is_action_pressed("move_up"):
-			if $AnimatedSprite2D.animation != "move_backward":
-				$AnimatedSprite2D.play("move_backward")
+	if not Global.is_paused:
+		if not Global.is_in_combat:
+			camera.position = self.position
 			
-			if $AnimatedSprite2D.flip_h:
-				flip()
+			if Input.is_action_pressed("move_up"):
+				if $AnimatedSprite2D.animation != "move_backward":
+					$AnimatedSprite2D.play("move_backward")
 				
-			current_direction = DIRECTION_UP
-			
-			move_and_collide(Vector2(0, -SPEED))
-		elif Input.is_action_pressed("move_left"):
-			if $AnimatedSprite2D.animation != "move_lateral":
-				$AnimatedSprite2D.play("move_lateral")
-			
-			if not $AnimatedSprite2D.flip_h:
-				flip()
+				if $AnimatedSprite2D.flip_h:
+					flip()
+					
+				current_direction = DIRECTION_UP
 				
-			current_direction = DIRECTION_LEFT
-			
-			move_and_collide(Vector2(-SPEED, 0))
-		elif Input.is_action_pressed("move_down"):
-			if $AnimatedSprite2D.animation != "move_frontal":
-				$AnimatedSprite2D.play("move_frontal")
-			
-			if $AnimatedSprite2D.flip_h:
-				flip()
+				move_and_collide(Vector2(0, -SPEED))
+			elif Input.is_action_pressed("move_left"):
+				if $AnimatedSprite2D.animation != "move_lateral":
+					$AnimatedSprite2D.play("move_lateral")
 				
-			current_direction = DIRECTION_DOWN
-			
-			move_and_collide(Vector2(0, SPEED))
-		elif Input.is_action_pressed("move_right"):
-			if $AnimatedSprite2D.animation != "move_lateral":
-				$AnimatedSprite2D.play("move_lateral")
-			
-			if $AnimatedSprite2D.flip_h:
-				flip()
+				if not $AnimatedSprite2D.flip_h:
+					flip()
+					
+				current_direction = DIRECTION_LEFT
 				
-			current_direction = DIRECTION_RIGHT
-			
-			move_and_collide(Vector2(SPEED, 0))
+				move_and_collide(Vector2(-SPEED, 0))
+			elif Input.is_action_pressed("move_down"):
+				if $AnimatedSprite2D.animation != "move_frontal":
+					$AnimatedSprite2D.play("move_frontal")
+				
+				if $AnimatedSprite2D.flip_h:
+					flip()
+					
+				current_direction = DIRECTION_DOWN
+				
+				move_and_collide(Vector2(0, SPEED))
+			elif Input.is_action_pressed("move_right"):
+				if $AnimatedSprite2D.animation != "move_lateral":
+					$AnimatedSprite2D.play("move_lateral")
+				
+				if $AnimatedSprite2D.flip_h:
+					flip()
+					
+				current_direction = DIRECTION_RIGHT
+				
+				move_and_collide(Vector2(SPEED, 0))
+			else:
+				stay_idle()
 		else:
-			stay_idle()
-	else:
-		var enemy_pos: Vector2 = get_parent().get_node("Enemy").position
-		
-		camera.position = Vector2(enemy_pos.x - 75, enemy_pos.y)
-		
-		if $AnimatedSprite2D.animation != "idle_lateral":
-			$AnimatedSprite2D.play("idle_lateral")
+			var enemy_pos: Vector2 = get_parent().get_node("Enemy").position
+			
+			camera.position = Vector2(enemy_pos.x - 75, enemy_pos.y)
+			
+			if $AnimatedSprite2D.animation != "idle_lateral":
+				$AnimatedSprite2D.play("idle_lateral")
 
 func _on_combat_area_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
 	if body == self:
