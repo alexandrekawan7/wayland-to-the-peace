@@ -60,6 +60,9 @@ func _process(_delta):
 		if not Global.is_in_combat:
 			camera.position = self.position
 			
+			if $AnimatedSprite2D.is_playing() and $AnimatedSprite2D.animation in ["attack_frontal", "attack_lateral", "attack_backward"]:
+				return
+			
 			if Input.is_action_pressed("move_up"):
 				if $AnimatedSprite2D.animation != "move_backward":
 					$AnimatedSprite2D.play("move_backward")
@@ -67,7 +70,10 @@ func _process(_delta):
 				if $AnimatedSprite2D.flip_h:
 					flip()
 					
-				current_direction = DIRECTION_UP
+				if not Input.is_action_pressed("keep_direction"):
+					current_direction = DIRECTION_UP
+				else:
+					current_direction = DIRECTION_DOWN
 				
 				move_and_collide(Vector2(0, -SPEED))
 			elif Input.is_action_pressed("move_left"):
@@ -77,7 +83,10 @@ func _process(_delta):
 				if not $AnimatedSprite2D.flip_h:
 					flip()
 					
-				current_direction = DIRECTION_LEFT
+				if not Input.is_action_pressed("keep_direction"):
+					current_direction = DIRECTION_LEFT
+				else:
+					current_direction = DIRECTION_RIGHT
 				
 				move_and_collide(Vector2(-SPEED, 0))
 			elif Input.is_action_pressed("move_down"):
@@ -86,8 +95,11 @@ func _process(_delta):
 				
 				if $AnimatedSprite2D.flip_h:
 					flip()
-					
-				current_direction = DIRECTION_DOWN
+				
+				if not Input.is_action_pressed("keep_direction"):
+					current_direction = DIRECTION_DOWN
+				else:
+					current_direction = DIRECTION_UP
 				
 				move_and_collide(Vector2(0, SPEED))
 			elif Input.is_action_pressed("move_right"):
@@ -97,9 +109,32 @@ func _process(_delta):
 				if $AnimatedSprite2D.flip_h:
 					flip()
 					
-				current_direction = DIRECTION_RIGHT
+				if not Input.is_action_pressed("keep_direction"):
+					current_direction = DIRECTION_RIGHT
+				else:
+					current_direction = DIRECTION_LEFT
 				
 				move_and_collide(Vector2(SPEED, 0))
+			elif Input.is_action_pressed("attack"):
+				match current_direction:
+					DIRECTION_DOWN:
+						if $AnimatedSprite2D.animation != "attack_frontal":
+							$AnimatedSprite2D.play("attack_frontal")
+					DIRECTION_RIGHT:
+						if $AnimatedSprite2D.animation != "attack_lateral":
+							$AnimatedSprite2D.play("attack_lateral")
+						
+						if $AnimatedSprite2D.flip_h:
+							flip()
+					DIRECTION_LEFT:
+						if $AnimatedSprite2D.animation != "attack_lateral":
+							$AnimatedSprite2D.play("attack_lateral")
+						
+						if not $AnimatedSprite2D.flip_h:
+							flip()
+					DIRECTION_UP:
+						if $AnimatedSprite2D.animation != "attack_backward":
+							$AnimatedSprite2D.play("attack_backward")
 			else:
 				stay_idle()
 		else:
